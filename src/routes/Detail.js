@@ -18,6 +18,7 @@ class Detail extends React.Component {
     if (location.state) {
       return <span>{location.state.title}</span>;
     } else {
+      // 여기 else가 없으면 componentDidMount로 가기 전에 에러가 나고 끝난다. 이렇게 처리해줘야함.
       return null;
     }
   }
