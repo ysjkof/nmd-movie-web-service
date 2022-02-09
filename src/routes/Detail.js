@@ -1,27 +1,38 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Movie from "../components/Movie";
 
-// 리액트에서 항상 props가 있고 정보를 전달함
-// function Detail(props) {
-//   console.log(props);
-//   return <span>hello</span>;
-// }
+function Detail() {
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [movie, setMovie] = useState();
 
-class Detail extends React.Component {
-  componentDidMount() {
-    const { location, history } = this.props;
-    if (location.state === undefined) {
-      history.push("/");
-    }
-  }
-  render() {
-    const { location } = this.props;
-    if (location.state) {
-      return <span>{location.state.title}</span>;
-    } else {
-      // 여기 else가 없으면 componentDidMount로 가기 전에 에러가 나고 끝난다. 이렇게 처리해줘야함.
-      return null;
-    }
-  }
+  const getMovie = async () => {
+    const json = await (
+      await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+    ).json();
+    setMovie(json.data.movie);
+    setLoading(false);
+  };
+  useEffect(() => {
+    getMovie();
+  }, []);
+
+  return (
+    <>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <Movie
+          key={movie.id}
+          id={movie.id}
+          coverImg={movie.medium_cover_image}
+          title={movie.title}
+          summary={movie.description_full}
+          genres={movie.genres}
+        />
+      )}
+    </>
+  );
 }
-
 export default Detail;
