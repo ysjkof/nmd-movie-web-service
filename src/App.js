@@ -6,7 +6,7 @@ import Detail from "./routes/Detail";
 import Navigation from "./components/Navigation";
 import "./App.css";
 import Todo from "./routes/Todo";
-import Coin from "./routes/Coin";
+import CoinTracker from "./routes/CoinTracker";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/movie/:id" element={<Detail />} />
         <Route path="/todo" element={<Todo />} />
-        <Route path="/coin" element={<Coin />} />
+        <Route path="/coin" element={<CoinTracker />} />
       </Routes>
     </HashRouter>
   );
